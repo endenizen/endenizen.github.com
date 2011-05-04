@@ -1,0 +1,20 @@
+body {
+  margin: 0;
+  background: #000;
+  color: #fff;
+  font-family: helvetica;
+}
+
+#main {
+  margin: 10px;
+  width: 300px;
+}
+
+#sliders {
+  margin: 0 10px;
+}
+
+#sidebar {
+  float: right;
+  width: 200px;
+}
