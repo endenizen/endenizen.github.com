@@ -77,11 +77,7 @@ function Rdio() {
     domain = "localhost",
     listener = "rdio_callback",
 
-    flashvars = {
-      'playbackToken': token,
-      'domain': domain,
-      'listener': listener
-    },
+    flashvars = {},
 
     params = {
       'allowScriptAccess': 'always'
@@ -92,7 +88,14 @@ function Rdio() {
   /* set correct token if in "production" */
   if(document.location.host == 'endenizen.github.com') {
     token = "GBRNwZoo_____3IyZWI3djNweXltOXZjY2pmcGtnYXpwcmVuZGVuaXplbi5naXRodWIuY29tfql1sdhneK-WcnHMs9qjcw==";
+    domain = 'endenizen.github.com';
   }
+
+  flashvars = {
+    'playbackToken': token,
+    'domain': domain,
+    'listener': listener
+  };
 
   swfobject.embedSWF('http://www.rdio.com/api/swf/', // the location of the Rdio Playback API SWF
     'apiswf', // the ID of the element that will be replaced with the SWF
