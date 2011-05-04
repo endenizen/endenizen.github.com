@@ -1,16 +1,43 @@
 $(function() {
-  $('#danceability').slider({
-    range: true,
-    min: 0.0,
-    max: 1.0,
-    step: 0.1,
-    values: [0.0, 1.0]
+  var min_max = {
+    M_danceability: [0.0, 1.0],
+    M_tempo: [0.0, 500.0],
+    M_duration: [0.0, 3600.0],
+    M_loudness: [-100.0, 100.0],
+    artist_M_familiarity: [0.0, 1.0],
+    artist_M_hotttnesss: [0.0, 1.0],
+    song_M_hotttnesss: [0.0, 1.0],
+    M_energy: [0.0, 1.0]
+  };
+
+  $.each(min_max, function(key, val) {
+    var sliderHeader = $('<h3></h3>');
+    sliderHeader.text(key);
+    $('#sliders').append(sliderHeader);
+
+    var newSlider = $('<div></div>');
+    newSlider.attr('id', key);
+    $('#sliders').append(newSlider);
+
+    newSlider.slider({
+      range: true,
+      min: val[0],
+      max: val[1],
+      values: val,
+      step: (val[1] - val[0]) / 10.0
+    });
   });
+
   $('#search').click(function() {
-    var params = {
-      min_danceability: $('#danceability').slider('values', 0),
-      max_danceability: $('#danceability').slider('values', 1)
-    };
+    var params = {};
+
+    $.each(min_max, function(key, val) {
+      var min = key.replace('M', 'min');
+      var max = key.replace('M', 'max');
+      params[min] = $('#' + key).slider('values', 0);
+      params[max] = $('#' + key).slider('values', 1);
+    });
+
     echo.search(params);
     return false;
   });
