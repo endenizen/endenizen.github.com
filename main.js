@@ -93,13 +93,22 @@ $(function() {
       params[max] = $('#' + key).slider('values', 1);
     });
 
-    var styles = $('#styles').find('.ui-selected');
-    if(styles.length > 0) {
-      var styleStr = "";
-      styles.each(function() {
-        styleStr += $(this).text();
+    function getSelected(el) {
+      var items = [];
+      el.find('.ui-selected').each(function() {
+        items.push($(this).text());
       });
-      params['style'] = styleStr;
+      return items.join(',');
+    }
+
+    var styles = getSelected($('#styles'));
+    if(styles.length > 0) {
+      params['style'] = styles;
+    }
+
+    var moods = getSelected($('#moods'));
+    if(moods.length > 0) {
+      params['mood'] = moods;
     }
 
     echo.search(params, function(count) {
