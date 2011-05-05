@@ -83,6 +83,7 @@ $(function() {
 
   $('#search').click(function() {
     $('#loading').show();
+    $('#no_results').hide();
     var params = {};
 
     $.each(min_max, function(key, val) {
@@ -101,8 +102,11 @@ $(function() {
       params['style'] = styleStr;
     }
 
-    echo.search(params, function() {
+    echo.search(params, function(count) {
       $('#loading').hide();
+      if(count == 0) {
+        $('#no_results').show();
+      }
     });
     return false;
   });
@@ -158,7 +162,7 @@ Echo.prototype.search = function(params, callback) {
     });
 
     if(callback) {
-      callback();
+      callback(result.response.songs.length);
     }
   });
 };

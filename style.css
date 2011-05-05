@@ -54,6 +54,10 @@ h3 {
   font-size: 11px;
 }
 
+#no_results {
+  display: none;
+}
+
 #song_holder {
   list-style-type: none;
   padding: 0;
