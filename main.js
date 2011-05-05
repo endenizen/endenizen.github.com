@@ -144,7 +144,10 @@ Echo.prototype.apiCall = function(type, method, params, callback) {
   ].join('');
 
   $.each(params, function(key, val) {
-    url += '&' + key + '=' + val;
+    val = ""+val;
+    $.each(val.split(','), function() {
+      url += '&' + key + '=' + this;
+    });
   });
 
   $.ajax({
