@@ -139,7 +139,8 @@ Echo.prototype.apiCall = function(type, method, params, callback) {
     '?api_key=' + this.apiKey,
     '&format=jsonp',
     '&bucket=id:rdio-us-streaming',
-    '&limit=true'
+    '&limit=true',
+    '&rank_type=familiarity'
   ].join('');
 
   $.each(params, function(key, val) {
