@@ -165,6 +165,7 @@ Echo.prototype.search = function(params, callback) {
     log(result);
 
     $.each(result.response.songs, function() {
+      if(!this.foreign_ids) return;
       var song = $('<li></li>').data('obj', this);
       song.text(this.title + ' by ' + this.artist_name);
       song.click(self.playMe);
