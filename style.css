@@ -5,16 +5,80 @@ body {
   font-family: helvetica;
 }
 
-#main {
-  margin: 10px;
-  width: 300px;
+h3 {
+  font-size: 12px;
 }
 
-#sliders {
-  margin: 0 10px;
+#main {
+  margin: 10px;
+}
+
+#loading {
+  display: none;
+  background-image: url('loading.gif');
+  background-repeat: no-repeat;
+  padding-left: 41px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 20px;
+  line-height: 34px;
+  height: 34px;
+  margin: 10px;
+}
+
+#slider_holder {
+  margin-left: 10px;
+  margin-right: 20px;
+  float: left;
+}
+
+#sliders h3 {
+  margin-bottom: 6px;
+  margin-left: -6px;
+}
+
+#style_holder {
+  float: left;
+  margin-left: 10px;
+}
+
+#mood_holder {
+  float: left;
+  margin-left: 10px;
 }
 
 #sidebar {
   float: right;
-  width: 200px;
+  width: 350px;
+  font-size: 11px;
+}
+
+#song_holder {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#song_holder li {
+  padding: 3px;
+  cursor: pointer;
+}
+
+ul.ui-selectable {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ui-selectee {
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 11px;
+  padding: 4px;
+}
+
+.ui-selectee.ui-selected {
+  background: #ccc;
+  color: #333;
 }

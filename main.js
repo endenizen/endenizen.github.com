@@ -10,6 +10,41 @@ $(function() {
     M_energy: [0.0, 1.0]
   };
 
+  var styles = [
+    "8-bit", "acoustic", "adult contemporary", "alternative", "ambient", "americana",
+    "avant-garde", "ballad", "big band", "black metal", "bluegrass", "blues",
+    "bossa nova", "celtic", "chanson", "christian", "classic rock", "classical",
+    "club", "comedy", "country", "dance", "dark wave", "death metal",
+    "disco", "drum and bass", "dub", "electronic", "electronica", "electropop",
+    "emo", "experimental", "female volcalists", "folk", "funk", "fusion",
+    "glitch", "gospel", "gothic", "grunge", "guitar virtuoso", "gypsy",
+    "hardcore", "heavy metal", "hip hop", "house", "indie", "industrial",
+    "instrumental", "j-pop", "j-rock", "jazz", "kpop", "latin",
+    "lo-fi", "lounge", "male vocalist", "mediaeval", "metal", "minmimal",
+    "motown", "musical", "new wave", "noise", "old school", "opera",
+    "pop", "psychedelic", "punk", "r&amp;b", "rap", "reggae",
+    "rock", "romantic", "roots", "singer-songwriter", "ska", "soul",
+    "soundtrack", "style", "surf music", "swing", "symphonic", "tango",
+    "techno", "trance", "trip hop", "turnablism", "world", "worship music"
+  ];
+
+  var moods = [
+    "aggressive", "ambient", "angry", "angst-ridden", "bouncy",
+    "calming", "carefree", "cheerful", "cold", "complex",
+    "cool", "dark", "disturbing", "dramatic", "dreamy",
+    "eerie", "elegant", "energetic", "enthusiastic", "epic",
+    "fun", "funky", "futuristic", "gentle", "gleeful",
+    "gloomy", "groovy", "happy", "harsh", "haunting",
+    "humorous", "hypnotic", "industrial", "intense", "intimate",
+    "joyous", "laid-back", "light", "lively", "manic",
+    "meditation", "melancholia", "mellow", "mystical", "ominous",
+    "party music", "passionate", "pastoral", "peaceful", "playful",
+    "poignant", "quiet", "rebellious", "reflective", "relax",
+    "romantic", "rowdy", "sad", "sentimental", "sexy",
+    "smooth", "soothing", "sophisticated", "spacey", "spiritual",
+    "strange", "sweet", "theater", "trippy", "warm", "whimsical"
+  ];
+
   $.each(min_max, function(key, val) {
     var sliderHeader = $('<h3></h3>');
     sliderHeader.text(key);
@@ -28,7 +63,26 @@ $(function() {
     });
   });
 
+  var holder = $('<ul></ul>')
+  $.each(styles, function() {
+    var newStyle = $('<li></li>').data('obj', this.toString());
+    newStyle.text(this.toString());
+    holder.append(newStyle);
+  });
+
+  $('#styles').html(holder.html()).selectable();
+
+  holder.empty();
+  $.each(moods, function() {
+    var newMood = $('<li></li>').data('obj', this.toString());
+    newMood.text(this.toString());
+    holder.append(newMood);
+  });
+
+  $('#moods').html(holder.html()).selectable();
+
   $('#search').click(function() {
+    $('#loading').show();
     var params = {};
 
     $.each(min_max, function(key, val) {
@@ -38,7 +92,18 @@ $(function() {
       params[max] = $('#' + key).slider('values', 1);
     });
 
-    echo.search(params);
+    var styles = $('#styles').find('.ui-selected');
+    if(styles.length > 0) {
+      var styleStr = "";
+      styles.each(function() {
+        styleStr += $(this).text();
+      });
+      params['style'] = styleStr;
+    }
+
+    echo.search(params, function() {
+      $('#loading').hide();
+    });
     return false;
   });
 });
@@ -76,7 +141,7 @@ Echo.prototype.apiCall = function(type, method, params, callback) {
   });
 };
 
-Echo.prototype.search = function(params) {
+Echo.prototype.search = function(params, callback) {
   var self = this;
 
   this.apiCall('song', 'search', params, function(result) {
@@ -91,6 +156,10 @@ Echo.prototype.search = function(params) {
       song.click(self.playMe);
       list.append(song);
     });
+
+    if(callback) {
+      callback();
+    }
   });
 };
 
