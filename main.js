@@ -96,7 +96,7 @@ $(function() {
     function getSelected(el) {
       var items = [];
       el.find('.ui-selected').each(function() {
-        items.push($(this).text());
+        items.push('^'+$(this).text());
       });
       return items.join(',');
     }
