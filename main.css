@@ -18,7 +18,7 @@ h2.title {
 }
 
 #content {
-  width: 350px;
+  width: 70%;
   margin: 0 auto;
 }
 
@@ -31,6 +31,13 @@ h2.title {
   margin: 0;
   padding: 0;
   list-style-type: none;
-  font-size: .8rem;
-  line-height: 1.2rem;
+  font-size: 1rem;
+  line-height: 1.4rem;
+}
+
+@media (max-width: 600px) {
+  #content {
+    width: auto;
+    margin: 0 1%;
+  }
 }
